@@ -17,7 +17,7 @@ for (x in nodes) {
             cleanWs()
 
             stage('Remove Docker Images') {
-                sh("docker rmi \${docker images --quiet} || true")
+                sh 'docker rmi $(docker images --quiet) || true'
             }
         }
     }
