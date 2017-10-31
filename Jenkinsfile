@@ -3,17 +3,17 @@ properties([
     pipelineTriggers([cron('56 4 * * 7')]),
 ])
 
-def nodes = [
+def names = [
     'dmbuild01.dm.esss.dk',
     'dmbuild02.dm.esss.dk',
     'dmbuild03.dm.esss.dk'
 ]
 
 def builders = [:]
-for (x in nodes) {
-    def node = x
-    builders[node] = {
-        node(node) {
+for (x in names) {
+    def name = x
+    builders[name] = {
+        node(name) {
             cleanWs()
 
             stage('Remove Docker Images') {
