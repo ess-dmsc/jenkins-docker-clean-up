@@ -1,6 +1,6 @@
 // Set periodic trigger at 4:56 every Sunday.
 properties([
-    pipelineTriggers([cron('4 56 * * 7')]),
+    pipelineTriggers([cron('56 4 * * 7')]),
 ])
 
 def nodes = [
