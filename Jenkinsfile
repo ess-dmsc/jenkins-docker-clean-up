@@ -16,6 +16,10 @@ for (x in names) {
         node(name) {
             cleanWs()
 
+            stage('List Docker Images') {
+                sh 'docker images'
+            }
+
             stage('Remove Docker Images') {
                 sh 'docker rmi $(docker images --quiet) || true'
             }
