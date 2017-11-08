@@ -1,3 +1,3 @@
 # Jenkins Docker Clean-Up
 
-Remove old Docker images from Jenkins nodes periodically.
+Remove old Docker containers and images from Jenkins nodes periodically.

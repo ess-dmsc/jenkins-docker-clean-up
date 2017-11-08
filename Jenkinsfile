@@ -16,6 +16,14 @@ for (x in names) {
         node(name) {
             cleanWs()
 
+            stage('List Docker Containers') {
+                sh 'docker ps --all'
+            }
+
+            stage('Remove Docker Containers') {
+                sh 'docker rm $(docker ps --all --quiet) || true'
+            }
+
             stage('List Docker Images') {
                 sh 'docker images'
             }
