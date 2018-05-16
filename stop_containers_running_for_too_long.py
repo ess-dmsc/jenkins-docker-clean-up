@@ -65,8 +65,7 @@ if __name__ == '__main__':
 
     print_stopping_criteria(args.how_many_hours_is_too_long)
 
-    # FIXME
-    max_delta = datetime.timedelta(seconds=args.how_many_hours_is_too_long)
+    max_delta = datetime.timedelta(hours=args.how_many_hours_is_too_long)
     containers_to_stop = get_containers_to_stop(max_delta)
     print_num_of_containers_to_stop(containers_to_stop)
 
