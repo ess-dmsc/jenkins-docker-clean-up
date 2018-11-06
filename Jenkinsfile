@@ -6,7 +6,8 @@ properties([
 def names = [
   'dmbuild01.dm.esss.dk',
   'dmbuild02.dm.esss.dk',
-  'dmbuild03.dm.esss.dk'
+  'dmbuild03.dm.esss.dk',
+  'dmbuild05.dm.esss.dk'
 ]
 
 def builders = [:]
