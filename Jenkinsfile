@@ -42,4 +42,28 @@ for (x in names) {
   }
 }
 
+itestnode = 'itest01.dm.esss.dk'
+builders[itestnode] = {
+  node(itestnode) {
+    stage('List Docker Containers') {
+      sh 'docker ps --all'
+    }
+
+    stage('Remove Docker Containers') {
+      sh 'docker rm $(docker ps --all --quiet) || true'
+    }
+
+    stage('List Docker Images') {
+      sh 'docker images'
+    }
+
+    stage('Remove Docker Images') {
+      sh 'docker rmi $(docker images --quiet) || true'
+    }
+
+    cleanWs()
+  }
+}
+}
+
 parallel builders
