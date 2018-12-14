@@ -64,6 +64,5 @@ builders[itestnode] = {
     cleanWs()
   }
 }
-}
 
 parallel builders
