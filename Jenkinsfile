@@ -42,7 +42,7 @@ for (x in names) {
   }
 }
 
-itestnode = 'itest01.dm.esss.dk'
+itestnode = 'itestjenkins01.dm.esss.dk'
 builders[itestnode] = {
   node(itestnode) {
     stage('List Docker Containers') {
