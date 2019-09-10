@@ -6,9 +6,14 @@ properties([
 def names = [
   'dmbuild01.dm.esss.dk',
   'dmbuild02.dm.esss.dk',
-  'dmbuild03.dm.esss.dk',
   'dmbuild05.dm.esss.dk',
-  'systest01.dm.esss.dk'
+  'dmbuild06.dm.esss.dk',
+  'dmbuild07.dm.esss.dk',
+  'dmbuild08.dm.esss.dk',
+  'dmbuild09.dm.esss.dk',
+  'dmbuild10.dm.esss.dk',
+  'systest01.dm.esss.dk',
+  'systest02.dm.esss.dk'
 ]
 
 def builders = [:]
@@ -66,4 +71,6 @@ builders[itestnode] = {
   }
 }
 
-parallel builders
+timeout(time: 1, unit: 'HOURS') {
+  parallel builders
+}
