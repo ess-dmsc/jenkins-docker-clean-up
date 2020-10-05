@@ -1,3 +1,6 @@
+@Library('ecdc-pipeline-test')
+import ecdcpipeline.ImageRemover
+
 // Set periodic trigger at 4:56 every day.
 properties([
   pipelineTriggers([cron('56 4 * * *')]),
@@ -24,6 +27,8 @@ def names = [
   'systest02.dm.esss.dk'
 ]
 
+imageRemover = new ImageRemover(this)
+
 def builders = [:]
 for (x in names) {
   def name = x
@@ -43,12 +48,8 @@ for (x in names) {
         sh 'docker rm $(docker ps --all --quiet) || true'
       }
 
-      stage('List Docker Images') {
-        sh 'docker images'
-      }
-
       stage('Remove Docker Images') {
-        sh 'docker rmi $(docker images --quiet) || true'
+        imageRemover.cleanImages()
       }
 
       cleanWs()
@@ -67,12 +68,8 @@ builders[itestnode] = {
       sh 'docker rm $(docker ps --all --quiet) || true'
     }
 
-    stage('List Docker Images') {
-      sh 'docker images'
-    }
-
     stage('Remove Docker Images') {
-      sh 'docker rmi $(docker images --quiet) || true'
+      imageRemover.cleanImages()
     }
 
     cleanWs()
