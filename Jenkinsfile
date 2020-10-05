@@ -1,4 +1,4 @@
-@Library('ecdc-pipeline-test')
+@Library('ecdc-pipeline')
 import ecdcpipeline.ImageRemover
 
 // Set periodic trigger at 4:56 every day.
