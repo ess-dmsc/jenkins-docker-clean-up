@@ -35,6 +35,10 @@ for (x in names) {
   builders[name] = {
     node(name) {
       try {
+        stage('Checkout') {
+          checkout scm
+        }
+
         stage('List Docker Containers') {
           sh 'docker ps --all'
         }
@@ -80,7 +84,6 @@ builders[itestnode] = {
 
 timeout(time: 1, unit: 'HOURS') {
   node('master') {
-    checkout scm
     parallel builders
   }
 }
