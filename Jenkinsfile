@@ -34,14 +34,35 @@ for (x in names) {
   def name = x
   builders[name] = {
     node(name) {
-      checkout scm
+      try {
+        stage('List Docker Containers') {
+          sh 'docker ps --all'
+        }
 
+        stage('Stop containers running for more than 24 hours') {
+          sh 'python stop_containers_running_for_too_long.py 24'
+        }
+
+        stage('Remove Docker Containers') {
+          sh 'docker rm $(docker ps --all --quiet) || true'
+        }
+
+        stage('Remove Docker Images') {
+          imageRemover.cleanImages()
+        }
+      } finally {
+        cleanWs()
+      }
+    }
+  }
+}
+
+itestnode = 'itestjenkins01.dm.esss.dk'
+builders[itestnode] = {
+  node(itestnode) {
+    try {
       stage('List Docker Containers') {
         sh 'docker ps --all'
-      }
-
-      stage('Stop containers running for more than 24 hours') {
-        sh 'python stop_containers_running_for_too_long.py 24'
       }
 
       stage('Remove Docker Containers') {
@@ -51,31 +72,13 @@ for (x in names) {
       stage('Remove Docker Images') {
         imageRemover.cleanImages()
       }
-
+    } finally {
       cleanWs()
     }
   }
 }
 
-itestnode = 'itestjenkins01.dm.esss.dk'
-builders[itestnode] = {
-  node(itestnode) {
-    stage('List Docker Containers') {
-      sh 'docker ps --all'
-    }
-
-    stage('Remove Docker Containers') {
-      sh 'docker rm $(docker ps --all --quiet) || true'
-    }
-
-    stage('Remove Docker Images') {
-      imageRemover.cleanImages()
-    }
-
-    cleanWs()
-  }
-}
-
 timeout(time: 1, unit: 'HOURS') {
+  checkout scm
   parallel builders
 }
