@@ -79,6 +79,8 @@ builders[itestnode] = {
 }
 
 timeout(time: 1, unit: 'HOURS') {
-  checkout scm
-  parallel builders
+  node('master') {
+    checkout scm
+    parallel builders
+  }
 }
