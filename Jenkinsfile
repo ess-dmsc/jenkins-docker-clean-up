@@ -62,7 +62,7 @@ for (x in names) {
   }
 }
 
-itestnode = 'itestjenkins01.dm.esss.dk'
+itestnode = 'itestjenkins02.ecdc.esss.dk'
 builders[itestnode] = {
   node(itestnode) {
     try {
