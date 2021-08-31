@@ -14,7 +14,7 @@ def names = [
   'dmbuild07.dm.esss.dk',
   'dmbuild08.dm.esss.dk',
   'dmbuild09.dm.esss.dk',
-  'dmbuild10.dm.esss.dk',
+  'dmbuild10.ecdc.esss.dk',
   'dmbuild11.dm.esss.dk',
   'dmbuild20.dm.esss.dk',
   'dmbuild21.dm.esss.dk',
