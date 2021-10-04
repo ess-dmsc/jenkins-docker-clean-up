@@ -44,30 +44,6 @@ for (x in names) {
   }
 }
 
-itest_nodes = nodesByLabel('integration-test')
-for (x in itest_nodes) {
-  def name = x
-  builders[name] = {
-    node(itestnode) {
-      try {
-        stage('List Docker Containers') {
-          sh 'docker ps --all'
-        }
-
-        stage('Remove Docker Containers') {
-          sh 'docker rm $(docker ps --all --quiet) || true'
-        }
-
-        stage('Remove Docker Images') {
-          imageRemover.cleanImages()
-        }
-      } finally {
-        cleanWs()
-      }
-    }
-  }
-}
-
 timeout(time: 1, unit: 'HOURS') {
   node('master') {
     parallel builders
