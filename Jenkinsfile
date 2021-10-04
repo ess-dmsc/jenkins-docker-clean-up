@@ -6,26 +6,9 @@ properties([
   pipelineTriggers([cron('56 4 * * *')]),
 ])
 
-def names = [
-  'dmbuild01.dm.esss.dk',
-  'dmbuild02.dm.esss.dk',
-  'dmbuild05.dm.esss.dk',
-  'dmbuild06.ecdc.esss.dk',
-  'dmbuild07.dm.esss.dk',
-  'dmbuild08.ecdc.esss.dk',
-  'dmbuild09.dm.esss.dk',
-  'dmbuild10.ecdc.esss.dk',
-  'dmbuild11.dm.esss.dk',
-  'dmbuild20.dm.esss.dk',
-  'dmbuild21.dm.esss.dk',
-  'dmbuild22.dm.esss.dk',
-  'dmbuild23.dm.esss.dk',
-  'dmbuild24.dm.esss.dk',
-  'dmbuild25.dm.esss.dk',
-  'dmbuild26.dm.esss.dk',
-  'systest01.dm.esss.dk',
-  'systest02.dm.esss.dk'
-]
+docker_nodes = nodesByLabel('docker')
+systest_nodes = nodesByLabel('system-test')
+names = docker_nodes + systest_nodes
 
 imageRemover = new ImageRemover(this)
 
@@ -61,23 +44,26 @@ for (x in names) {
   }
 }
 
-itestnode = 'itestjenkins02.ecdc.esss.dk'
-builders[itestnode] = {
-  node(itestnode) {
-    try {
-      stage('List Docker Containers') {
-        sh 'docker ps --all'
-      }
+itest_nodes = nodesByLabel('integration-test')
+for (x in itest_nodes) {
+  def name = x
+  builders[name] = {
+    node(itestnode) {
+      try {
+        stage('List Docker Containers') {
+          sh 'docker ps --all'
+        }
 
-      stage('Remove Docker Containers') {
-        sh 'docker rm $(docker ps --all --quiet) || true'
-      }
+        stage('Remove Docker Containers') {
+          sh 'docker rm $(docker ps --all --quiet) || true'
+        }
 
-      stage('Remove Docker Images') {
-        imageRemover.cleanImages()
+        stage('Remove Docker Images') {
+          imageRemover.cleanImages()
+        }
+      } finally {
+        cleanWs()
       }
-    } finally {
-      cleanWs()
     }
   }
 }
