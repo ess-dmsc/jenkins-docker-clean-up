@@ -23,7 +23,6 @@ def names = [
   'dmbuild24.dm.esss.dk',
   'dmbuild25.dm.esss.dk',
   'dmbuild26.dm.esss.dk',
-  'dmbuild29.dm.esss.dk',
   'systest01.dm.esss.dk',
   'systest02.dm.esss.dk'
 ]
