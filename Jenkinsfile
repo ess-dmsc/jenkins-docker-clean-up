@@ -27,7 +27,7 @@ for (x in names) {
         }
 
         stage('Stop containers running for more than 24 hours') {
-          sh 'python stop_containers_running_for_too_long.py 24'
+          sh 'python3 stop_containers_running_for_too_long.py 24'
         }
 
         stage('Remove Docker Containers') {
