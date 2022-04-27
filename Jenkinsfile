@@ -7,12 +7,11 @@ properties([
 ])
 
 docker_nodes = nodesByLabel('docker')
-names = docker_nodes + systest_nodes
 
 imageRemover = new ImageRemover(this)
 
 def builders = [:]
-for (x in names) {
+for (x in docker_nodes) {
   def name = x
   builders[name] = {
     node(name) {
