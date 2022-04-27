@@ -7,7 +7,6 @@ properties([
 ])
 
 docker_nodes = nodesByLabel('docker')
-systest_nodes = nodesByLabel('system-test')
 names = docker_nodes + systest_nodes
 
 imageRemover = new ImageRemover(this)
