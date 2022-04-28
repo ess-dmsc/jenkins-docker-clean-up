@@ -33,7 +33,11 @@ for (x in docker_nodes) {
         }
 
         stage('Remove Docker Images') {
-          imageRemover.cleanImages()
+          try {
+            imageRemover.cleanImages()
+          } catch(e) {
+            echo 'Ignoring error'
+          }
         }
       } finally {
         cleanWs()
